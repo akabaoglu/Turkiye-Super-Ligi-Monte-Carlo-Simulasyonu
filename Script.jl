@@ -130,3 +130,96 @@ length(filter(x -> x == team_code["Goztep"], champs_21))/length(results)
 
 champs_22 = round.(Int64, map(x -> vcat(filter(y -> y[3] == 1.0, eachrow(results[x][9]))...)[1], eachindex(results)))
 length(filter(x -> x == team_code["Konyaspor"], champs_22))/length(results) 
+
+# Other Teams
+function champ_count_1(x)
+    champ_n = combine(groupby(DataFrame(vcat(x...), :auto), :x1), [:x2, :x3] .=> sum)
+    return subset(champ_n, :x2_sum => ByRow(x -> x == sort(unique(champ_n.x2_sum), rev = true)[1]))
+end
+
+function champ_count_3(x)
+    champ_n = combine(groupby(DataFrame(vcat(x...), :auto), :x1), [:x2, :x3] .=> sum)
+    return subset(champ_n, :x2_sum => ByRow(x -> x == sort(unique(champ_n.x2_sum), rev = true)[3]))
+end
+
+function champ_count_4(x)
+    champ_n = combine(groupby(DataFrame(vcat(x...), :auto), :x1), [:x2, :x3] .=> sum)
+    return subset(champ_n, :x2_sum => ByRow(x -> x == sort(unique(champ_n.x2_sum), rev = true)[4]))
+end
+
+function champ_count_5(x)
+    champ_n = combine(groupby(DataFrame(vcat(x...), :auto), :x1), [:x2, :x3] .=> sum)
+    return subset(champ_n, :x2_sum => ByRow(x -> x == sort(unique(champ_n.x2_sum), rev = true)[5]))
+end
+
+nineyear_top = vcat(map(x -> champ_count_1(results[x][1:9]), eachindex(results))...)
+nineyear_third = vcat(map(x -> champ_count_3(results[x][1:9]), eachindex(results))...)
+nineyear_fourth = vcat(map(x -> champ_count_4(results[x][1:9]), eachindex(results))...)
+nineyear_fifth = vcat(map(x -> champ_count_5(results[x][1:9]), eachindex(results))...)
+
+tenyear_top = vcat(map(x -> champ_count_1(results[x]), eachindex(results))...)
+tenyear_third = vcat(map(x -> champ_count_3(results[x]), eachindex(results))...)
+tenyear_fourth = vcat(map(x -> champ_count_4(results[x]), eachindex(results))...)
+tenyear_fifth = vcat(map(x -> champ_count_5(results[x]), eachindex(results))...)
+
+mean(nineyear_top.x3_sum)
+length(filter(x -> x <= 3, nineyear_top.x3_sum))/length(nineyear_top.x3_sum)
+
+mean(nineyear_third.x3_sum)
+length(filter(x -> x <= 4, nineyear_third.x3_sum))/length(nineyear_third.x3_sum)
+
+mean(nineyear_fourth.x3_sum)
+length(filter(x -> x <= 1, nineyear_fourth.x3_sum))/length(nineyear_fourth.x3_sum)
+
+mean(nineyear_fifth.x3_sum)
+length(filter(x -> x <= 1, nineyear_fifth.x3_sum))/length(nineyear_fifth.x3_sum)
+
+
+mean(tenyear_top.x3_sum)
+length(filter(x -> x <= 5, tenyear_top.x3_sum))/length(tenyear_top.x3_sum)
+
+mean(tenyear_third.x3_sum)
+length(filter(x -> x <= 3, tenyear_third.x3_sum))/length(tenyear_third.x3_sum)
+
+mean(tenyear_fourth.x3_sum)
+length(filter(x -> x <= 1, tenyear_fourth.x3_sum))/length(tenyear_fourth.x3_sum)
+
+mean(tenyear_fifth.x3_sum)
+length(filter(x -> x <= 1, tenyear_fifth.x3_sum))/length(tenyear_fifth.x3_sum)
+
+
+pts_count9_bjk = vcat(map(x -> point_count(results[x][1:9], 644), eachindex(results))...)
+pts_count9_gs = vcat(map(x -> point_count(results[x][1:9], 616), eachindex(results))...)
+pts_count9_bs = vcat(map(x -> point_count(results[x][1:9], 574), eachindex(results))...)
+pts_count9_tr = vcat(map(x -> point_count(results[x][1:9], 540), eachindex(results))...)
+
+pts_count10_gs = vcat(map(x -> point_count(results[x], 718), eachindex(results))...)
+pts_count10_bjk = vcat(map(x -> point_count(results[x], 700), eachindex(results))...)
+pts_count10_bs = vcat(map(x -> point_count(results[x], 635), eachindex(results))...)
+pts_count10_tr = vcat(map(x -> point_count(results[x], 607), eachindex(results))...)
+
+
+mean(pts_count9_bjk.x3_sum)
+length(filter(x -> x <= 3, pts_count9_bjk.x3_sum))/length(pts_count9_bjk.x3_sum)
+
+mean(pts_count9_gs.x3_sum)
+length(filter(x -> x <= 4, pts_count9_gs.x3_sum))/length(pts_count9_gs.x3_sum)
+
+mean(pts_count9_bs.x3_sum)
+length(filter(x -> x <= 1, pts_count9_bs.x3_sum))/length(pts_count9_bs.x3_sum)
+
+mean(pts_count9_tr.x3_sum)
+length(filter(x -> x <= 1, pts_count9_tr.x3_sum))/length(pts_count9_tr.x3_sum)
+
+
+mean(pts_count10_gs.x3_sum)
+length(filter(x -> x <= 5, pts_count10_gs.x3_sum))/length(pts_count10_gs.x3_sum)
+
+mean(pts_count10_bjk.x3_sum)
+length(filter(x -> x <= 3, pts_count10_bjk.x3_sum))/length(pts_count10_bjk.x3_sum)
+
+mean(pts_count10_bs.x3_sum)
+length(filter(x -> x <= 1, pts_count10_bs.x3_sum))/length(pts_count10_bs.x3_sum)
+
+mean(pts_count10_tr.x3_sum)
+length(filter(x -> x <= 1, pts_count10_tr.x3_sum))/length(pts_count10_tr.x3_sum)
